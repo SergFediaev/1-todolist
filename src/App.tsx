@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TasksType, TodoList} from "./TodoList";
-import {v1} from "uuid";
+import {TasksType, TodoList} from './TodoList';
+import {v1} from 'uuid';
 
 export type FilterValuesType = 'all' | 'completed' | 'active'
 
@@ -10,7 +10,7 @@ export function Counter() {
     let [data, setData] = useState(1)
 
     return <div
-        style={{cursor: "pointer", fontSize: '100px'}}
+        style={{cursor: 'pointer', fontSize: '100px'}}
         onClick={() => {
             setData(++data)
         }}>{data}</div>
@@ -20,17 +20,17 @@ function App() {
     let tasks2 = [
         {
             id: v1(),
-            title: "Watch",
+            title: 'Watch',
             isDone: true,
         },
         {
             id: v1(),
-            title: "Play",
+            title: 'Play',
             isDone: false,
         },
         {
             id: v1(),
-            title: "Read",
+            title: 'Read',
             isDone: true,
         },
     ]
@@ -39,22 +39,22 @@ function App() {
     let [data, setData] = useState<Array<TasksType>>([
         {
             id: v1(),
-            title: "HTML & CSS",
+            title: 'HTML & CSS',
             isDone: true,
         },
         {
             id: v1(),
-            title: "JavaScript",
+            title: 'JavaScript',
             isDone: true,
         },
         {
             id: v1(),
-            title: "ReactJS",
+            title: 'ReactJS',
             isDone: false,
         },
         {
             id: v1(),
-            title: "Redux",
+            title: 'Redux',
             isDone: false,
         },
     ]);
@@ -80,6 +80,16 @@ function App() {
         setData(newTasks)
     }
 
+    function changeStatus(taskId: string, isDone: boolean) {
+        let foundedTask = data.find(task => task.id === taskId)
+        if (foundedTask) {
+            foundedTask.isDone = isDone
+        }
+
+        // let copy = [...data]
+        setData([...data])
+    }
+
     const changeFilter = (filter: FilterValuesType) => setFilter(filter)
 
     let tasksForTodoList = data
@@ -95,11 +105,13 @@ function App() {
     return (
         <div className="App">
             <TodoList
-                title='What to learn'
+                title="What to learn"
                 tasks={tasksForTodoList}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
-                addTask={addTask}/>
+                addTask={addTask}
+                changeTaskStatus={changeStatus}
+                filter={filter}/>
             {/*<TodoList title='What to do' tasks={data} removeTask={removeTask}/>*/}
         </div>
     );
