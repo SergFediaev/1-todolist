@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react'
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react'
 import {IconButton, TextField} from '@mui/material'
 import {AddCircleOutlined} from '@mui/icons-material'
 
@@ -6,7 +6,8 @@ type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
-export function AddItemForm(props: AddItemFormPropsType) {
+export const AddItemForm = memo((props: AddItemFormPropsType) => {
+    console.log('AddItemForm rendering')
     const [newTaskTitle, setNewTaskTitle] = useState('')
 
     const [error, setError] = useState<string | null>(null)
@@ -16,7 +17,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
     }
 
     const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
+        if (error !== null) setError(null)
 
         if (event.ctrlKey && event.charCode === 13) {
             props.addItem(newTaskTitle)
@@ -48,4 +49,4 @@ export function AddItemForm(props: AddItemFormPropsType) {
             color={'primary'}
         ><AddCircleOutlined/></IconButton>
     </div>
-}
+})
