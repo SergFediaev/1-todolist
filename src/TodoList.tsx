@@ -4,7 +4,7 @@ import {EditableSpan} from './EditableSpan'
 import {Button, IconButton} from '@mui/material'
 import {Delete} from '@mui/icons-material'
 import {useDispatch, useSelector} from 'react-redux'
-import {AppRootState} from './state/store'
+import {AppRootStateType} from './state/store'
 import {addTaskAC} from './state/tasks-reducer'
 import {FilterValuesType} from './AppWithRedux'
 import {Task} from './Task'
@@ -27,7 +27,7 @@ type TodoListPropsType = {
 export const TodoList = memo(function (props: TodoListPropsType) {
     console.log('TodoList rendering')
     const dispatch = useDispatch()
-    const tasks = useSelector<AppRootState, TasksType[]>(state => state.tasks[props.id])
+    const tasks = useSelector<AppRootStateType, TasksType[]>(state => state.tasks[props.id])
 
     const addTask = useCallback((newTitle: string) => dispatch(addTaskAC(newTitle, props.id)), [])
 
