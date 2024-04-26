@@ -3,6 +3,7 @@ import React from 'react'
 import {Provider} from 'react-redux'
 import {store} from './state/store'
 import {action} from '@storybook/addon-actions'
+import {TaskPriorities, TaskStatuses} from './api/todolists-api'
 
 export default {
     title: 'Task Component',
@@ -15,17 +16,29 @@ const removeTaskCallback = action('Task removed')
 
 export const TaskBaseExample = () => {
     return <Provider store={store}>
-        <Task task={{id: '1', isDone: true, title: 'CSS'}}
+        <Task task={{
+            id: '1', status: TaskStatuses.Completed, title: 'CSS',
+            todoListId: 'todolistId1',
+            description: '',
+            startDate: '',
+            deadline: '',
+            addedDate: '',
+            order: 0,
+            priority: TaskPriorities.Low,
+        }}
               todoListId={'todolistId1'}
-            // changeTaskStatus={changeTaskStatusCallback}
-            // changeTaskTitle={changeTaskTitleCallback}
-            // removeTask={removeTaskCallback}
         />
-        <Task task={{id: '2', isDone: false, title: 'JS'}}
+        <Task task={{
+            id: '2', status: TaskStatuses.New, title: 'JS',
+            todoListId: 'todolistId1',
+            description: '',
+            startDate: '',
+            deadline: '',
+            addedDate: '',
+            order: 0,
+            priority: TaskPriorities.Low,
+        }}
               todoListId={'todolistId2'}
-            // changeTaskStatus={changeTaskStatusCallback}
-            // changeTaskTitle={changeTaskTitleCallback}
-            // removeTask={removeTaskCallback}
         />
     </Provider>
 }
