@@ -1,20 +1,11 @@
-import React, {useCallback, useState} from 'react'
-import './App.css'
-import {AddItemForm} from './AddItemForm'
+import React, {useState} from 'react'
+import '../App.css'
+import {AddItemForm} from '../AddItemForm/AddItemForm'
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@mui/material'
 import {MenuRounded} from '@mui/icons-material'
-import {
-    addTodolistAC,
-    changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    FilterValuesType,
-    removeTodolistAC,
-    TodolistDomainType,
-} from './state/todolists-reducer'
-import {useDispatch, useSelector} from 'react-redux'
-import {AppRootStateType} from './state/store'
-import {TodoList} from './TodoList'
-import {TaskType} from './api/todolists-api'
+import {TodoList} from '../TodoList'
+import {TaskType} from '../api/todolists-api'
+import {useAppWithRedux} from './hooks/useAppWithRedux'
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -33,27 +24,14 @@ export function Counter() {
 
 function AppWithRedux() {
     console.log('AppWithRedux rendering')
-    const dispatch = useDispatch()
-    const toDoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
 
-    const changeFilter = useCallback((todoListId: string, filter: FilterValuesType) => {
-        dispatch(changeTodolistFilterAC(todoListId, filter))
-    }, [])
-
-    const changeToDoListTitle = useCallback((id: string, newTitle: string) => {
-        const action = changeTodolistTitleAC(id, newTitle)
-        dispatch(action)
-    }, [])
-
-    const removeTodoList = useCallback((todoLIstId: string) => {
-        const action = removeTodolistAC(todoLIstId)
-        dispatch(action)
-    }, [])
-
-    const addToDoList = useCallback((title: string) => {
-        const action = addTodolistAC(title)
-        dispatch(action)
-    }, [])
+    const {
+        toDoLists,
+        addToDoList,
+        changeFilter,
+        removeTodoList,
+        changeToDoListTitle,
+    } = useAppWithRedux()
 
     return (
         <div className="App">
