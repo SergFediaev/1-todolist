@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import './App.css'
 import {AddItemForm} from './AddItemForm'
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@mui/material'
@@ -7,6 +7,7 @@ import {
     addTodolistAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
+    fetchTodolistsTC,
     FilterValuesType,
     removeTodolistAC,
     TodolistDomainType,
@@ -15,6 +16,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from './state/store'
 import {TodoList} from './TodoList'
 import {TaskType} from './api/todolists-api'
+// import {AnyAction} from 'redux'
+// import {ThunkDispatch} from 'redux-thunk'
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -34,7 +37,12 @@ export function Counter() {
 function AppWithRedux() {
     console.log('AppWithRedux rendering')
     const dispatch = useDispatch()
+    // const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch()
     const toDoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
+
+    useEffect(() => {
+        dispatch(fetchTodolistsTC())
+    }, [])
 
     const changeFilter = useCallback((todoListId: string, filter: FilterValuesType) => {
         dispatch(changeTodolistFilterAC(todoListId, filter))
