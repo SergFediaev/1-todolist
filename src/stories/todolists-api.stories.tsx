@@ -86,7 +86,7 @@ export const DeleteTasks = () => {
     const [todoListId, setTodoListId] = useState<string>('')
 
     const deleteTask = () => {
-        todolistsAPI.deleteTasks(todoListId, taskId)
+        todolistsAPI.deleteTask(todoListId, taskId)
             .then(res => {
                 setState(res.data)
             })
@@ -109,7 +109,7 @@ export const CreateTasks = () => {
     const [todoListId, setTodoListId] = useState<string>('')
 
     const createTask = () => {
-        todolistsAPI.createTasks(todoListId, taskTitle)
+        todolistsAPI.createTask(todoListId, taskTitle)
             .then(res => {
                 setState(res.data)
             })

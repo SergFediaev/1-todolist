@@ -5,7 +5,7 @@ import {Button, IconButton} from '@mui/material'
 import {Delete} from '@mui/icons-material'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from './state/store'
-import {addTaskAC, fetchTasksTC} from './state/tasks-reducer'
+import {addTaskTC, fetchTasksTC} from './state/tasks-reducer'
 import {Task} from './Task'
 import {TaskStatuses, TaskType} from './api/todolists-api'
 import {FilterValuesType} from './state/todolists-reducer'
@@ -28,7 +28,7 @@ export const TodoList = memo(function (props: TodoListPropsType) {
         dispatch(fetchTasksTC(props.id))
     }, [])
 
-    const addTask = useCallback((newTitle: string) => dispatch(addTaskAC(newTitle, props.id)), [])
+    const addTask = useCallback((newTitle: string) => dispatch(addTaskTC(newTitle, props.id)), [])
 
     const onAllClickHandler = useCallback(() => props.changeFilter(props.id, 'all'), [props.changeFilter, props.id])
     const onActiveClickHandler = useCallback(() => props.changeFilter(props.id, 'active'), [props.changeFilter, props.id])
