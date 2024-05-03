@@ -1,10 +1,10 @@
 import {useDispatch} from 'react-redux'
 import React, {ChangeEvent, memo, useCallback} from 'react'
 import {Checkbox, IconButton} from '@mui/material'
-import {EditableSpan} from './EditableSpan'
+import {EditableSpan} from '../../../../components/EditableSpan/EditableSpan'
 import {Delete} from '@mui/icons-material'
-import {TaskStatuses, TaskType} from './api/todolists-api'
-import {removeTaskTC, updateTaskTC} from './state/tasks-reducer'
+import {TaskStatuses, TaskType} from '../../../../api/todolists-api'
+import {removeTaskTC, updateTaskTC} from '../../tasks-reducer'
 
 type TaskPropsType = {
     task: TaskType

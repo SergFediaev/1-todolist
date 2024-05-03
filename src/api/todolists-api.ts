@@ -10,6 +10,36 @@ const instance = axios.create({
     ...settings,
 })
 
+// API
+export const todolistsAPI = {
+    getTodolists: () => {
+        return instance.get<TodolistType[]>('todo-lists')
+    },
+    createTodolist(title: string) {
+        return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title})
+    },
+    deleteTodolist(id: string) {
+        return instance.delete<ResponseType>(`todo-lists/${id}`)
+    },
+    updateTodolist(id: string, title: string) {
+        return instance.put<ResponseType>(`todo-lists/${id}`, {title})
+    },
+    getTasks(todoListId: string) {
+        return instance.get<GetTaskResponse>(`todo-lists/${todoListId}/tasks`)
+    },
+    deleteTask(todoListId: string, taskId: string) {
+        return instance.delete<ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`)
+    },
+    createTask(todoListId: string, taskTitle: string) {
+        return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todoListId}/tasks`, {title: taskTitle})
+    },
+    updateTask(todoListId: string, taskId: string, model: UpdateTaskModelType) {
+        return instance.put<ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
+    },
+}
+
+// Types
+
 export type TodolistType = {
     id: string
     title: string
@@ -64,31 +94,4 @@ type GetTaskResponse = {
     error: string | null
     totalCount: number
     items: TaskType[]
-}
-
-export const todolistsAPI = {
-    getTodolists: () => {
-        return instance.get<TodolistType[]>('todo-lists')
-    },
-    createTodolist(title: string) {
-        return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title})
-    },
-    deleteTodolist(id: string) {
-        return instance.delete<ResponseType>(`todo-lists/${id}`)
-    },
-    updateTodolist(id: string, title: string) {
-        return instance.put<ResponseType>(`todo-lists/${id}`, {title})
-    },
-    getTasks(todoListId: string) {
-        return instance.get<GetTaskResponse>(`todo-lists/${todoListId}/tasks`)
-    },
-    deleteTask(todoListId: string, taskId: string) {
-        return instance.delete<ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`)
-    },
-    createTask(todoListId: string, taskTitle: string) {
-        return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todoListId}/tasks`, {title: taskTitle})
-    },
-    updateTask(todoListId: string, taskId: string, model: UpdateTaskModelType) {
-        return instance.put<ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
-    },
 }

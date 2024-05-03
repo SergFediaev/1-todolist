@@ -1,13 +1,24 @@
 import React, {useState} from 'react'
-import './App.css'
-import {TodoList} from './TodoList'
+import '../app/App.css'
+import {TodoList} from '../features/TodolistsList/Todolist/TodoList'
 import {v1} from 'uuid'
-import {AddItemForm} from './AddItemForm'
+import {AddItemForm} from '../components/AddItemForm/AddItemForm'
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@mui/material'
 import {MenuRounded} from '@mui/icons-material'
-import {TaskPriorities, TaskStatuses} from './api/todolists-api'
-import {FilterValuesType, TodolistDomainType} from './state/todolists-reducer'
-import {TasksStateType} from './AppWithRedux'
+import {TaskPriorities, TaskStatuses} from '../api/todolists-api'
+import {FilterValuesType, TodolistDomainType} from '../features/TodolistsList/todolists-reducer'
+import {TasksStateType} from '../features/TodolistsList/tasks-reducer'
+
+export function Counter() {
+    console.log('Counter rendered')
+    let [data, setData] = useState(1)
+
+    return <div
+        style={{cursor: 'pointer', fontSize: '100px'}}
+        onClick={() => {
+            setData(++data)
+        }}>{data}</div>
+}
 
 function App() {
 
