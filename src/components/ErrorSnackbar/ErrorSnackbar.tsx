@@ -3,7 +3,7 @@ import Alert from '@mui/material/Alert'
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../app/store'
-import {setErrorAC} from '../../app/app-reducer'
+import {setAppErrorAC} from '../../app/app-reducer'
 
 export function CustomizedSnackbars() {
     // const [open, setOpen] = React.useState(true)
@@ -18,7 +18,7 @@ export function CustomizedSnackbars() {
             return
         }
 
-        dispatch(setErrorAC(null))
+        dispatch(setAppErrorAC(null))
         // setOpen(false)
     }
 

@@ -2,6 +2,7 @@ import {v1} from 'uuid'
 import {
     addTodolistAC,
     changeTodolistFilterAC,
+    changeTodolistsEntityStatusAC,
     changeTodolistTitleAC,
     FilterValuesType,
     removeTodolistAC,
@@ -10,6 +11,7 @@ import {
     todosistsReducer,
 } from './todolists-reducer'
 import {TodolistType} from '../../api/todolists-api'
+import {RequestStatusType} from '../../app/app-reducer'
 
 let todoListId1: string
 let todoListId2: string
@@ -19,8 +21,8 @@ beforeEach(() => {
     todoListId1 = v1()
     todoListId2 = v1()
     startState = [
-        {id: todoListId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
-        {id: todoListId2, title: 'What to buy', filter: 'all', addedDate: '', order: 0},
+        {id: todoListId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0, entityStatus: 'idle'},
+        {id: todoListId2, title: 'What to buy', filter: 'all', addedDate: '', order: 0, entityStatus: 'idle'},
     ]
 })
 
@@ -75,4 +77,15 @@ test('todolists should be set to the state', () => {
     const endState = todosistsReducer([], action)
 
     expect(endState.length).toBe(2)
+})
+
+test('correct entity status of todolist should be changed', () => {
+    const newStatus: RequestStatusType = 'loading'
+
+    const action = changeTodolistsEntityStatusAC(todoListId2, newStatus)
+
+    const endState = todosistsReducer(startState, action)
+
+    expect(endState[0].entityStatus).toBe('idle')
+    expect(endState[1].entityStatus).toBe('loading')
 })

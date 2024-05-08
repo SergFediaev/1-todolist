@@ -1,8 +1,8 @@
-import {AddTotodlistActionType, RemoveTodoListActionType, SetTodolistsActionType} from './todolists-reducer'
+import {AddTodolistActionType, RemoveTodoListActionType, SetTodolistsActionType} from './todolists-reducer'
 import {TaskType, todolistsAPI, UpdateTaskModelType} from '../../api/todolists-api'
 import {Dispatch} from 'redux'
 import {AppRootStateType} from '../../app/store'
-import {setErrorAC, SetErrorActionType, setStatusAC, SetStatusActionType} from '../../app/app-reducer'
+import {setAppErrorAC, setAppStatusAC, SetErrorActionType, SetStatusActionType} from '../../app/app-reducer'
 
 const initialState: TasksStateType = {}
 
@@ -59,11 +59,11 @@ export const setTasksAC = (tasks: TaskType[], todolistId: string) => ({type: 'SE
 
 // Thunks
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionTypes | SetStatusActionType>) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setAppStatusAC('loading'))
 
     todolistsAPI.getTasks(todolistId).then(response => {
         dispatch(setTasksAC(response.data.items, todolistId))
-        dispatch(setStatusAC('succeeded'))
+        dispatch(setAppStatusAC('succeeded'))
     })
 }
 
@@ -74,18 +74,18 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: D
 }
 
 export const addTaskTC = (taskTitle: string, todolistId: string) => (dispatch: Dispatch<ActionTypes | SetErrorActionType | SetStatusActionType>) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setAppStatusAC('loading'))
 
     todolistsAPI.createTask(todolistId, taskTitle).then(response => {
         if (response.data.resultCode === 0) {
             dispatch(addTaskAC(response.data.data.item))
-            dispatch(setStatusAC('succeeded'))
+            dispatch(setAppStatusAC('succeeded'))
 
         } else {
-            if (response.data.messages.length) dispatch(setErrorAC(response.data.messages[0]))
-            else dispatch(setErrorAC('Some error occurred'))
+            if (response.data.messages.length) dispatch(setAppErrorAC(response.data.messages[0]))
+            else dispatch(setAppErrorAC('Some error occurred'))
         }
-        dispatch(setStatusAC('failed'))
+        dispatch(setAppStatusAC('failed'))
     })
 }
 
@@ -120,7 +120,7 @@ type ActionTypes = ReturnType<typeof removeTaskAC>
     | ReturnType<typeof addTaskAC>
     | ReturnType<typeof updateTaskAC>
     | ReturnType<typeof setTasksAC>
-    | AddTotodlistActionType
+    | AddTodolistActionType
     | RemoveTodoListActionType
     | SetTodolistsActionType
 

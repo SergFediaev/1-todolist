@@ -17,12 +17,17 @@ import {TodoList} from './Todolist/TodoList'
 // import {AnyAction} from 'redux'
 // import {ThunkDispatch} from 'redux-thunk'
 
-export const TodolistsList = () => {
+type PropsType = {
+    demo?: boolean
+}
+
+export const TodolistsList = ({demo = false, ...props}: PropsType) => {
     const dispatch = useDispatch()
     // const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch()
     const toDoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
 
     useEffect(() => {
+        if (demo) return
         dispatch(fetchTodolistsTC())
     }, [])
 
@@ -52,12 +57,11 @@ export const TodolistsList = () => {
                     return <Grid item key={todoList.id}>
                         <Paper style={{padding: '10px'}}>
                             <TodoList
-                                id={todoList.id}
-                                title={todoList.title}
+                                todoList={todoList}
                                 changeFilter={changeFilter}
-                                filter={todoList.filter}
                                 removeTodoList={removeTodoList}
                                 changeToListTitle={changeToDoListTitle}
+                                demo={demo}
                             />
                         </Paper>
                     </Grid>

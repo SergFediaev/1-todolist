@@ -4,9 +4,10 @@ import {AddCircleOutlined} from '@mui/icons-material'
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
-export const AddItemForm = memo((props: AddItemFormPropsType) => {
+export const AddItemForm = memo(({addItem, disabled = false}: AddItemFormPropsType) => {
     console.log('AddItemForm rendering')
     const [newTaskTitle, setNewTaskTitle] = useState('')
 
@@ -20,14 +21,14 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
         if (error !== null) setError(null)
 
         if (event.ctrlKey && event.charCode === 13) {
-            props.addItem(newTaskTitle)
+            addItem(newTaskTitle)
             setNewTaskTitle('')
         }
     }
 
     const addTask = () => {
         if (newTaskTitle.trim() !== '' && newTaskTitle !== 'censored') {
-            props.addItem(newTaskTitle.trim())
+            addItem(newTaskTitle.trim())
             setNewTaskTitle('')
         } else {
             setError('Invalid input')
@@ -43,10 +44,12 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
             onKeyPress={onKeyPressHandler}
             error={!!error}
             helperText={error}
+            disabled={disabled}
         />
         <IconButton
             onClick={addTask}
             color={'primary'}
+            disabled={disabled}
         ><AddCircleOutlined/></IconButton>
     </div>
 })
