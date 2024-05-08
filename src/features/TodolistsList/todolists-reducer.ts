@@ -1,6 +1,6 @@
 import {todolistsAPI, TodolistType} from '../../api/todolists-api'
 import {Dispatch} from 'redux'
-import {RequestStatusType, setAppStatusAC, SetStatusActionType} from '../../app/app-reducer'
+import {RequestStatusType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer'
 
 const initialState: TodolistDomainType[] = []
 
@@ -115,4 +115,4 @@ export  type TodolistDomainType = TodolistType & {
     entityStatus: RequestStatusType
 }
 
-type ThunkDispatch = Dispatch<ActionTypes | SetStatusActionType>
+type ThunkDispatch = Dispatch<ActionTypes | SetAppStatusActionType>
