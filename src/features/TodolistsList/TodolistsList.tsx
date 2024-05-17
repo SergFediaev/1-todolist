@@ -13,6 +13,7 @@ import React, {useCallback, useEffect} from 'react'
 import {Grid, Paper} from '@mui/material'
 import {AddItemForm} from '../../components/AddItemForm/AddItemForm'
 import {TodoList} from './Todolist/TodoList'
+import {Navigate} from 'react-router-dom'
 
 // import {AnyAction} from 'redux'
 // import {ThunkDispatch} from 'redux-thunk'
@@ -25,9 +26,10 @@ export const TodolistsList = ({demo = false, ...props}: PropsType) => {
     const dispatch = useDispatch()
     // const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch()
     const toDoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     useEffect(() => {
-        if (demo) return
+        if (demo || !isLoggedIn) return
         dispatch(fetchTodolistsTC())
     }, [])
 
@@ -46,6 +48,8 @@ export const TodolistsList = ({demo = false, ...props}: PropsType) => {
     const addToDoList = useCallback((title: string) => {
         dispatch(addTodolistTC(title))
     }, [])
+
+    if (!isLoggedIn) return <Navigate to={'/login'}/>
 
     return <>
         <Grid container style={{padding: '20px'}}>
